@@ -1,0 +1,16 @@
+int reverse(int x) {
+    int retVal = 0;
+    int chk = 0;
+    
+    while(x != 0)
+    {
+        chk = retVal;
+        retVal *= 10;
+        retVal += (x%10);        
+        x /= 10;
+        
+        if(retVal/10 != chk) return 0;
+        
+    }
+    return retVal;
+}
