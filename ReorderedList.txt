@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+ struct ListNode {
+     
+     int val;
+     struct ListNode *next;
+   };
+ 
+void reorderList(struct ListNode* head) {
+    
+    typedef struct ListNode Node;
+    Node* tail = head;
+    Node* temp1 = head;
+    Node* head2;
+    int count=0,i=0;
+    
+	if(tail == NULL || tail->next ==NULL) return ;
+    while(tail->next != NULL){
+        head2 = tail;
+        tail = tail->next; 
+        count++;
+    
+    }
+    temp1 = head2;
+    tail = head;
+    
+    printf("%d %d [%d]\n",temp1->val,tail->val,count);
+    
+    for(i=0;i<count;i++)
+    {
+        if(head2 == tail) break;
+        
+        if(i >= (count/2)+1){            
+            
+            temp1 = tail->next;
+            
+            if(head2->next != NULL){ tail->next = head2->next;}
+            head2->next = tail;   
+            tail = temp1;
+        }
+        else if(i == (count/2)){
+                temp1 = tail;
+                tail = tail->next;
+                temp1->next = NULL;
+        }
+        else
+            tail = tail->next;
+            
+        
+    }
+    
+    //temp1 = head2;
+   // for(int i=0;i<2;i++){
+        //printf("%d ",temp1->val);
+        //temp1 = temp1->next;
+
+    //}
+   // printf("\n");
+    tail = head;
+    
+    for(i=0;i<((count+1)/2)-1;i++)
+    {
+        temp1 = head2->next;
+        head2->next = tail->next;
+        tail->next = head2;
+
+        tail = head2->next;
+        head2 = temp1;
+        
+    }
+}
+
+int main()
+{
+    struct ListNode list;
+    struct ListNode* tmp = &list;
+    struct ListNode* tmp2 = &list;
+
+    for(int i=0;i<4;i++)
+    {
+        tmp->val = i+1;
+        tmp->next = (struct ListNode* )malloc(sizeof(struct ListNode));
+        tmp = tmp->next;
+        tmp->next = NULL;
+        
+    }
+    
+    reorderList(&list);
+    tmp = &list;
+    
+    for(int i=0;i<4;i++){
+        printf("%d ",tmp->val);
+        tmp = tmp->next;
+
+    }
+    /*tmp = list.next;
+    while(tmp != NULL)
+    {
+        tmp2 = tmp->next;
+        free(tmp);
+        tmp = tmp2;
+    }*/
+        
+
+    return 0;
+}
