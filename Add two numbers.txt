@@ -1,0 +1,49 @@
+
+  Definition for singly-linked list.
+  struct ListNode {
+      int val;
+      struct ListNode next;
+  };
+ 
+struct ListNode addTwoNumbers(struct ListNode l1, struct ListNode l2) {
+    
+    typedef struct ListNode Node;
+    struct ListNode tail1=l1;
+    struct ListNode tail2=l2;
+    struct ListNode tail3=NULL;
+    struct ListNode ReturnList = NULL;
+    
+    int sum=0;
+    ReturnList = (struct ListNode )malloc(sizeof(struct ListNode));
+    tail3 = ReturnList;
+    
+    while(1)
+    {     
+        if(tail3 == NULL){
+            tail3 = (struct ListNode )malloc(sizeof(struct ListNode));
+            tail3-next = NULL;
+        }
+        
+        if(tail1 != NULL)
+            sum += tail1-val;
+        
+        if(tail2 != NULL)
+            sum += tail2-val;
+        
+        
+        tail3-val = sum%10;
+        sum = 10;
+        tail3-next = NULL;    
+
+        if(tail1 != NULL) tail1 = tail1-next;
+        if(tail2 != NULL) tail2 = tail2-next;
+    
+        if(tail1 == NULL && tail2 == NULL && sum == 0 ) break;
+        if(tail3-next == NULL) tail3-next = (struct ListNode )malloc(sizeof(struct ListNode));  
+        
+        tail3 = tail3-next;
+        tail3-next = NULL;
+    }
+    
+    return ReturnList;
+}
