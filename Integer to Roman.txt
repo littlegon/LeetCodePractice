@@ -1,0 +1,81 @@
+char* intToRoman(int num) {
+    
+    typedef struct RomanChar {
+        int MainVal;
+        char MainChar;
+        
+        int FVal;
+        char FChar;
+        
+        int SubVal;
+        char SubChar;
+    }Rchar;
+    
+    int i=0,j=0,value = num,temp = 0;
+    int count=0;
+    char* ret = NULL;
+    Rchar RList[] = {
+        {1000,'M',500,'D',100,'C'},
+        {100,'C',50,'L',10,'X'},
+        {10,'X',5,'V',1,'I'}     
+       
+    };
+    
+    if(num <= 0 || num >= 4000) return ret;
+    ret = malloc(30);
+    
+    while(i < 3 && value > 0)
+    {
+        if(value >= RList[i].MainVal)
+        {
+            temp = value/RList[i].MainVal;            
+            for(j=0;j<temp;j++)
+            {
+                ret[count++] = RList[i].MainChar;
+            }
+            value -= temp*RList[i].MainVal;
+        }
+        
+        if(value < RList[i].MainVal && value >= RList[i].SubVal)
+        {
+            temp = value/RList[i].SubVal;
+            if(temp >= 9)
+            {
+                ret[count++] = RList[i].SubChar;
+                ret[count++] = RList[i].MainChar;
+                
+                value -= temp*RList[i].SubVal;
+            }
+            else if(temp >= 5)
+            {
+                ret[count++] = RList[i].FChar;
+                for(j=0;j<temp-5;j++)
+                {
+                    ret[count++] = RList[i].SubChar;
+                }
+                value -= temp*RList[i].SubVal;
+            }
+             else if(temp == 4)
+            {
+                printf("5\n");
+                ret[count++] = RList[i].SubChar;
+                ret[count++] = RList[i].FChar;
+                
+                value -= temp*RList[i].SubVal;
+            }
+            else
+            {
+                for(j=0;j<temp;j++)
+                {
+                    ret[count++] = RList[i].SubChar;
+                }
+                value -= temp*RList[i].SubVal;
+            }
+        }
+        i++;
+    }
+    
+    ret[count] = '\0';
+    
+    return ret;
+}
